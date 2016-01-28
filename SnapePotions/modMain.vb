@@ -4,8 +4,12 @@ Imports System.Text.RegularExpressions
 Module modMain
 
     Sub Main()
+        Const WINDOW_TITLE As String = "Snape Potion Manufacturing Quality Program"
+
         Dim readingsPath, reportPath As String
         Dim showReportFile As Boolean = False
+
+        setWindowTitle(WINDOW_TITLE)
 
         readingsPath = promptUser("Please enter the path and name of the file containing the measurements:")
         validateReadingsPath(readingsPath)
@@ -91,6 +95,10 @@ Module modMain
             writeBlankLine()
             Console.WriteLine("Thank you Mario! But our princess is in another castle!")
         End If
+    End Sub
+
+    Sub setWindowTitle(newTitle As String)
+        Console.Title = newTitle
     End Sub
 
 End Module
