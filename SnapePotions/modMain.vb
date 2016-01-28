@@ -14,11 +14,11 @@ Module modMain
         validateReportPath(reportPath)
 
         ' Generate Report /// TODO
+        Console.WriteLine("Report file has been generated!")
         showReportFile = promptUserYesNo("Would you like to see the report file?")
-        Console.WriteLine(showReportFile)
 
         playEasterEggIfActivated(reportPath)
-        waitForUserPressKey()
+        waitForUserPressEnter()
     End Sub
 
     Sub waitForUserInput()
@@ -29,7 +29,7 @@ Module modMain
         Console.WriteLine("")
     End Sub
 
-    Sub waitForUserPressKey()
+    Sub waitForUserPressEnter()
         Console.WriteLine("Press [enter] to exit...")
         waitForUserInput()
     End Sub
@@ -41,7 +41,7 @@ Module modMain
 
     Function promptUserYesNo(promptMessage As String) As Boolean
         Dim response = promptUser(promptMessage & " [Y/n]")
-        Dim match As Match = Regex.Match(response, "n|no", RegexOptions.IgnoreCase)
+        Dim match As Match = Regex.Match(response, "n|no", RegexOptions.IgnoreCase)  ' Default to "Yes", "Y", "y" or anything else as being "True"
 
         Return (Not match.Success)  ' Returns True if "Yes" and False if "No"
     End Function
@@ -67,7 +67,7 @@ Module modMain
         If Not validateFilePathExists(readingsPath) Then
             writeBlankLine()
             Console.WriteLine("The path: " & readingsPath & ", is not valid. Please try again.")
-            waitForUserPressKey()
+            waitForUserPressEnter()
             End
         End If
     End Sub
@@ -76,7 +76,7 @@ Module modMain
         If Not validateDirectoryContainingFilePathExists(reportPath) Then
             writeBlankLine()
             Console.WriteLine("The path: " & reportPath & ", is not valid. Please try again.")
-            waitForUserPressKey()
+            waitForUserPressEnter()
             End
         End If
     End Sub
