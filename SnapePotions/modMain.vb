@@ -10,10 +10,12 @@ Module modMain
         readingsPath = promptUser("Please enter the path and name of the file containing the measurements:")
         validateReadingsPath(readingsPath)
 
+        writeBlankLine()
         reportPath = promptUser("Please enter the path and name of the report file to generate:")
         validateReportPath(reportPath)
 
         ' Generate Report /// TODO
+        writeBlankLine()
         Console.WriteLine("Report file has been generated!")
         showReportFile = promptUserYesNo("Would you like to see the report file?")
 
