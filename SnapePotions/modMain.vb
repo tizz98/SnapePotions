@@ -84,7 +84,7 @@ Module modMain
     Sub playEasterEggIfActivated(reportPath As String)
         Dim easterEggActivationString As String = "koopa_report"
 
-        If reportPath.Contains(easterEggActivationString) Then
+        If reportPath.ToLower().Contains(easterEggActivationString) Then
             Music.Play()
             writeBlankLine()
             Console.WriteLine("Thank you Mario! But our princess is in another castle!")
