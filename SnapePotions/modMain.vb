@@ -9,7 +9,7 @@ Module modMain
         Dim readingsPath, reportPath As String
         Dim showReportFile As Boolean = False
 
-        setWindowTitle(WINDOW_TITLE)
+        setupConsole(WINDOW_TITLE, bgColor:=ConsoleColor.Blue, fgColor:=ConsoleColor.White)
 
         readingsPath = promptUser("Please enter the path and name of the file containing the measurements:")
         validateReadingsPath(readingsPath)
@@ -99,6 +99,19 @@ Module modMain
 
     Sub setWindowTitle(newTitle As String)
         Console.Title = newTitle
+    End Sub
+
+    Sub setConsoleColors(Optional bgColor As ConsoleColor = ConsoleColor.Black,
+                         Optional fgColor As ConsoleColor = ConsoleColor.Gray)
+        Console.BackgroundColor = bgColor
+        Console.ForegroundColor = fgColor
+    End Sub
+
+    Sub setupConsole(windowTitle As String, Optional bgColor As ConsoleColor = ConsoleColor.Black,
+                     Optional fgColor As ConsoleColor = ConsoleColor.Gray)
+        setWindowTitle(windowTitle)
+        setConsoleColors(bgColor:=bgColor, fgColor:=fgColor)
+        Console.Clear()  ' This will reset the complete console background
     End Sub
 
 End Module
