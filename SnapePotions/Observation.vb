@@ -7,7 +7,7 @@
     Public Const VALUE_INDEX As Integer = 1
     Public Const TIME_TAKEN_INDEX As Integer = 2
 
-    Private Const DESIRED_READING_LEVEL As Integer = 1000
+    Public Const DESIRED_READING_LEVEL As Integer = 1000
 
     Public Sub New(id As String, value As Integer, timeTaken As String)
         Me.id = id

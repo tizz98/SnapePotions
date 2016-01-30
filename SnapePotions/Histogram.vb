@@ -11,8 +11,20 @@
     Private _scaleIsSet As Boolean = False
 
     Public Sub New(biggestNumber As Integer, smallestNumber As Integer, Optional lineLength As Integer = DEFAULT_LINE_LENGTH)
-        Me.biggestNumber = biggestNumber
-        Me.smallestNumber = smallestNumber
+        ' Make sure that we account for the artificially inserted desired reading level placeholder observation
+        If biggestNumber < Observation.DESIRED_READING_LEVEL Then
+            Me.biggestNumber = Observation.DESIRED_READING_LEVEL
+        Else
+            Me.biggestNumber = biggestNumber
+        End If
+
+        ' Make sure that we account for the artificially inserted desired reading level placeholder observation
+        If smallestNumber > Observation.DESIRED_READING_LEVEL Then
+            Me.smallestNumber = Observation.DESIRED_READING_LEVEL
+        Else
+            Me.smallestNumber = smallestNumber
+        End If
+
         Me.lineLength = lineLength
 
         getScale()  ' populate "_scale"
@@ -20,8 +32,7 @@
 
     Public Function getScale() As Integer
         If Not _scaleIsSet Then
-            Dim tempScale = biggestNumber - smallestNumber
-            _scale = IIf(tempScale = 0, 1, tempScale)
+            _scale = biggestNumber - smallestNumber
         End If
 
         Return _scale
@@ -32,8 +43,14 @@
         Dim displayCharacter As String = IIf(isSpecialLine,
                                              DEFAULT_SPECIAL_DISPLAY_CHARACTER,
                                              DEFAULT_DISPLAY_CHARACTER)
+        Dim scale As Integer = getScale()
+        Dim useReadingAsScale As Boolean = False
 
-        For i As Integer = 0 To ((reading - smallestNumber) / getScale()) * lineLength
+        If scale = 0 Then
+            useReadingAsScale = True
+        End If
+
+        For i As Integer = 0 To ((reading - smallestNumber) / IIf(useReadingAsScale, reading, scale)) * lineLength
             returnString &= displayCharacter
         Next
 

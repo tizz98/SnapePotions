@@ -42,6 +42,6 @@
     End Sub
 
     Public Function getAverage() As Decimal
-        Return observationAccumulatedTotal / totalCount
+        Return IIf(totalCount = 0, 0.0, observationAccumulatedTotal / totalCount)
     End Function
 End Class

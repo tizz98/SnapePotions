@@ -31,6 +31,7 @@ Module modMain
         report.writeReportToFile(reportPath)
 
         If showReportFile Then
+            Console.Clear()
             Console.Write(report.generateReport())
         End If
 
