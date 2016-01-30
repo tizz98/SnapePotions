@@ -31,7 +31,7 @@ Module modMain
         report.writeReportToFile(reportPath)
 
         If showReportFile Then
-            Console.WriteLine(report.generateReport())
+            Console.Write(report.generateReport())
         End If
 
         playEasterEggIfActivated(reportPath)

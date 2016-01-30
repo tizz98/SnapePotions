@@ -77,7 +77,8 @@ Public Class ShiftManager
     End Function
 
     Public Function getAllObservations() As List(Of Observation)
-        Dim allObservations As List(Of Observation) = firstShiftObservations.observations
+        Dim allObservations As New List(Of Observation)
+        allObservations.AddRange(firstShiftObservations.observations)
         allObservations.AddRange(secondShiftObservations.observations)
         allObservations.AddRange(thirdShiftObservations.observations)
 
