@@ -12,6 +12,7 @@ Public Class ShiftQualityReport
     Private Const OBSERVATION_HEADER_LINE As String = "(ID  ): Value"
 
     Private Const SHIFT_OBSERVATION_FMT_STR As String = "{0,-35}{1,-15}{2,-15}{3,-15}"
+    Private Const SHIFT_STATS_FMT_STR As String = "{0,-35}{1,-15:N2}{2,-15:N2}{3,-15:N2}"
 
     Private OBSERVATION_LINE_FORMAT As String
     Private HEADER_FOOTER_DIVIDER_LINE As String = StrDup(FULL_LINE_LENGTH, HEADER_FOOTER_DIVIDER_CHAR)
@@ -61,32 +62,44 @@ Public Class ShiftQualityReport
         Dim firstStr As String = "First"
         Dim secondStr As String = "Second"
         Dim thirdStr As String = "Third"
-        Dim returnString As String = String.Format(SHIFT_OBSERVATION_FMT_STR, "", firstStr, secondStr, thirdStr)
+        Dim returnString As String = String.Format(SHIFT_OBSERVATION_FMT_STR, "", firstStr, secondStr, thirdStr) & vbCrLf
         returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "", StrDup(firstStr.Length, "-"),
-                                      StrDup(secondStr.Length, "-"), StrDup(thirdStr.Length, "-"))
+                                      StrDup(secondStr.Length, "-"), StrDup(thirdStr.Length, "-")) & vbCrLf
 
         returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Observations:",
                                       shiftManager.firstShiftObservations.totalCount,
                                       shiftManager.secondShiftObservations.totalCount,
-                                      shiftManager.thirdShiftObservations.totalCount)
+                                      shiftManager.thirdShiftObservations.totalCount) & vbCrLf
         returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number Under Target:",
                                       shiftManager.firstShiftObservations.underCount,
                                       shiftManager.secondShiftObservations.underCount,
-                                      shiftManager.thirdShiftObservations.underCount)
+                                      shiftManager.thirdShiftObservations.underCount) & vbCrLf
         returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number On Target:",
                                       shiftManager.firstShiftObservations.onCount,
                                       shiftManager.secondShiftObservations.onCount,
-                                      shiftManager.thirdShiftObservations.onCount)
+                                      shiftManager.thirdShiftObservations.onCount) & vbCrLf
         returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number Over Target",
                                       shiftManager.firstShiftObservations.overCount,
                                       shiftManager.secondShiftObservations.overCount,
-                                      shiftManager.thirdShiftObservations.overCount)
+                                      shiftManager.thirdShiftObservations.overCount) & vbCrLf
 
         Return returnString
     End Function
 
     Private Function getShiftStatisticsInformation() As String
-        Dim returnString As String = ""
+        Dim returnString As String = String.Format(SHIFT_STATS_FMT_STR, "Statistics:", "", "", "") & vbCrLf
+        returnString &= String.Format(SHIFT_STATS_FMT_STR, "Minimum Observed:",
+                                      shiftManager.firstShiftObservations.minObservation,
+                                      shiftManager.secondShiftObservations.minObservation,
+                                      shiftManager.thirdShiftObservations.minObservation) & vbCrLf
+        returnString &= String.Format(SHIFT_STATS_FMT_STR, "Average Observed:",
+                                      shiftManager.firstShiftObservations.getAverage(),
+                                      shiftManager.secondShiftObservations.getAverage(),
+                                      shiftManager.thirdShiftObservations.getAverage()) & vbCrLf
+        returnString &= String.Format(SHIFT_STATS_FMT_STR, "Maximum Observed:",
+                                      shiftManager.firstShiftObservations.maxObservation,
+                                      shiftManager.secondShiftObservations.maxObservation,
+                                      shiftManager.thirdShiftObservations.maxObservation) & vbCrLf
 
         Return returnString
     End Function
