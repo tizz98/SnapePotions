@@ -73,14 +73,32 @@
         Return tempMax
     End Function
 
-    Public Function getAllObservationsSortedByValue() As List(Of Observation)
+    Public Function getAllObservations() As List(Of Observation)
         Dim allObservations As List(Of Observation) = firstShiftObservations.observations
         allObservations.AddRange(secondShiftObservations.observations)
         allObservations.AddRange(thirdShiftObservations.observations)
 
-        allObservations.Sort(Function(x, y) x.value.CompareTo(y.value))  ' sort in ascending order
-
         Return allObservations
+    End Function
+
+    Public Function getAllObservationsSortedByValue() As List(Of Observation)
+        Return getAllObservationsSortedByValue(getAllObservations())
+    End Function
+
+    Public Function getAllObservationsSortedByValue(allObservations As List(Of Observation)) As List(Of Observation)
+        allObservations.Sort(Function(x, y) x.value.CompareTo(y.value))  ' sort in ascending order
+        Return allObservations
+    End Function
+
+    Public Function getAllObservationsSortedByValueAndBaseValue() As List(Of Observation)
+        Dim allObservations As List(Of Observation) = getAllObservations()
+        Dim hasBaseLineValue As Boolean = allObservations.Any(Function(o) o.value = 1000)
+
+        If Not hasBaseLineValue Then
+            allObservations.Add(New Observation("", 1000, "00:00"))
+        End If
+
+        Return getAllObservationsSortedByValue(allObservations)
     End Function
 
     Private Enum Shift

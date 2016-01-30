@@ -29,6 +29,8 @@ Module modMain
         Console.WriteLine("Report file has been generated!")
         showReportFile = promptUserYesNo("Would you like to see the report file?")
 
+        report.writeReportToFile(reportPath)
+
         If showReportFile Then
             Console.WriteLine(report.generateReport())
         End If

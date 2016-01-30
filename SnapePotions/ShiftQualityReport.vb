@@ -1,4 +1,6 @@
-﻿Public Class ShiftQualityReport
+﻿Imports System.IO
+
+Public Class ShiftQualityReport
     Private histogram As Histogram
     Private shiftManager As ShiftManager
     Private headerCorpTitle As String
@@ -38,7 +40,7 @@
     Private Function getObservationHistogram() As String
         Dim returnString As String = OBSERVATION_HEADER_LINE & vbCrLf
 
-        For Each observation As Observation In shiftManager.getAllObservationsSortedByValue()
+        For Each observation As Observation In shiftManager.getAllObservationsSortedByValueAndBaseValue()
             returnString &= String.Format(OBSERVATION_LINE_FORMAT, observation.id, observation.value,
                                           histogram.getLineForReading(observation.value, observation.isOnDesiredReadingLevel()))
             returnString &= vbCrLf
@@ -51,4 +53,10 @@
         Return String.Format("{0,-" & CStr(lineLength) & "}",
                              String.Format("{0," & (Math.Ceiling((lineLength + stringToCenter.Length) / 2)).ToString() & "}", stringToCenter))
     End Function
+
+    Public Sub writeReportToFile(filePath As String)
+        Dim file As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(filePath, False)  ' Overwrite if the file exists
+        file.Write(generateReport())
+        file.Close()
+    End Sub
 End Class
