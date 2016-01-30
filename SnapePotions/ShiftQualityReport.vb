@@ -11,6 +11,8 @@ Public Class ShiftQualityReport
     Private Const SHIFT_INFO_HEADER_TITLE As String = "Shift Information"
     Private Const OBSERVATION_HEADER_LINE As String = "(ID  ): Value"
 
+    Private Const SHIFT_OBSERVATION_FMT_STR As String = "{0,-35}{1,-15}{2,-15}{3,-15}"
+
     Private OBSERVATION_LINE_FORMAT As String
     Private HEADER_FOOTER_DIVIDER_LINE As String = StrDup(FULL_LINE_LENGTH, HEADER_FOOTER_DIVIDER_CHAR)
 
@@ -23,7 +25,8 @@ Public Class ShiftQualityReport
     End Sub
 
     Public Function generateReport() As String
-        Dim returnString As String = getReportHeading() & getObservationHistogram() & getShiftInfoHeading()
+        Dim returnString As String = getReportHeading() & getObservationHistogram()
+        returnString &= getShiftInfoHeading() & getShiftInformation()
 
         Return returnString
     End Function
@@ -42,6 +45,48 @@ Public Class ShiftQualityReport
         Dim returnString As String = HEADER_FOOTER_DIVIDER_LINE & vbCrLf
         returnString &= centerString(SHIFT_INFO_HEADER_TITLE) & vbCrLf
         returnString &= HEADER_FOOTER_DIVIDER_LINE & vbCrLf
+
+        Return returnString
+    End Function
+
+    Private Function getShiftInformation() As String
+        Dim returnString As String = getObservationShiftInformation() & vbCrLf
+        returnString &= getShiftStatisticsInformation() & vbCrLf
+        returnString &= HEADER_FOOTER_DIVIDER_LINE & vbCrLf
+
+        Return returnString
+    End Function
+
+    Private Function getObservationShiftInformation() As String
+        Dim firstStr As String = "First"
+        Dim secondStr As String = "Second"
+        Dim thirdStr As String = "Third"
+        Dim returnString As String = String.Format(SHIFT_OBSERVATION_FMT_STR, "", firstStr, secondStr, thirdStr)
+        returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "", StrDup(firstStr.Length, "-"),
+                                      StrDup(secondStr.Length, "-"), StrDup(thirdStr.Length, "-"))
+
+        returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Observations:",
+                                      shiftManager.firstShiftObservations.totalCount,
+                                      shiftManager.secondShiftObservations.totalCount,
+                                      shiftManager.thirdShiftObservations.totalCount)
+        returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number Under Target:",
+                                      shiftManager.firstShiftObservations.underCount,
+                                      shiftManager.secondShiftObservations.underCount,
+                                      shiftManager.thirdShiftObservations.underCount)
+        returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number On Target:",
+                                      shiftManager.firstShiftObservations.onCount,
+                                      shiftManager.secondShiftObservations.onCount,
+                                      shiftManager.thirdShiftObservations.onCount)
+        returnString &= String.Format(SHIFT_OBSERVATION_FMT_STR, "Number Over Target",
+                                      shiftManager.firstShiftObservations.overCount,
+                                      shiftManager.secondShiftObservations.overCount,
+                                      shiftManager.thirdShiftObservations.overCount)
+
+        Return returnString
+    End Function
+
+    Private Function getShiftStatisticsInformation() As String
+        Dim returnString As String = ""
 
         Return returnString
     End Function
