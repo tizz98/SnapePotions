@@ -9,7 +9,7 @@ Module modMain
 
         Dim readingsPath, reportPath As String
         Dim showReportFile As Boolean = False
-        Dim observations As New ObservationCollection()
+        Dim myShiftManager As ShiftManager
 
         setupConsole(WINDOW_TITLE, bgColor:=ConsoleColor.Blue, fgColor:=ConsoleColor.White)
 
@@ -20,7 +20,7 @@ Module modMain
         reportPath = promptUser("Please enter the path and name of the report file to generate:")
         validateReportPath(reportPath)
 
-        observations = parseInputReadingsFile(readingsPath)
+        myShiftManager = parseInputReadingsFile(readingsPath)
 
         ' Generate Report /// TODO
         writeBlankLine()
@@ -31,39 +31,8 @@ Module modMain
         waitForUserPressEnter()
     End Sub
 
-    Public Class Observation
-        Public id As Integer
-        Public value As Integer
-        Public timeTaken As String
-
-        Public Const ID_INDEX As Integer = 0
-        Public Const VALUE_INDEX As Integer = 1
-        Public Const TIME_TAKEN_INDEX As Integer = 2
-
-        Public Sub New(id As Integer, value As Integer, timeTaken As String)
-            Me.id = id
-            Me.value = value
-            Me.timeTaken = timeTaken
-        End Sub
-    End Class
-
-    Public Class ObservationCollection
-        Private observations As New List(Of Observation)
-
-        Public Sub New(inputObservations As List(Of Observation))
-            observations = inputObservations
-        End Sub
-
-        Public Sub New()
-        End Sub
-
-        Public Sub Add(observation As Observation)
-            observations.Add(observation)
-        End Sub
-    End Class
-
-    Function parseInputReadingsFile(readingsPath As String) As ObservationCollection
-        Dim observations As New ObservationCollection()
+    Function parseInputReadingsFile(readingsPath As String) As ShiftManager
+        Dim myShiftManager As New ShiftManager()
 
         Using myReader As New TextFieldParser(readingsPath)
             myReader.TextFieldType = FieldType.Delimited
@@ -75,14 +44,14 @@ Module modMain
                 Try
                     currentRow = myReader.ReadFields()
 
-                    observations.Add(getObservationFromRow(currentRow))
+                    myShiftManager.Add(getObservationFromRow(currentRow))
                 Catch ex As MalformedLineException
                     MsgBox("Line " & ex.Message & " is invalid. Skipping.")
                 End Try
             End While
         End Using
 
-        Return observations
+        Return myShiftManager
     End Function
 
     Function getObservationFromRow(row As String()) As Observation
