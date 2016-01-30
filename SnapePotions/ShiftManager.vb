@@ -1,4 +1,6 @@
-﻿Public Class ShiftManager
+﻿Imports Microsoft.VisualBasic.FileIO
+
+Public Class ShiftManager
     Public firstShiftObservations As New ObservationCollection()
     Public secondShiftObservations As New ObservationCollection()
     Public thirdShiftObservations As New ObservationCollection()
@@ -100,6 +102,31 @@
         End If
 
         Return getAllObservationsSortedByValue(allObservations)
+    End Function
+
+    Public Sub parseInputReadingsFile(readingsPath As String)
+        Using myReader As New TextFieldParser(readingsPath)
+            myReader.TextFieldType = FieldType.Delimited
+            myReader.Delimiters = New String() {vbTab}
+
+            Dim currentRow As String()
+
+            While Not myReader.EndOfData
+                Try
+                    currentRow = myReader.ReadFields()
+
+                    Me.Add(getObservationFromRow(currentRow))
+                Catch ex As MalformedLineException
+                    MsgBox("Line " & ex.Message & " is invalid. Skipping.")
+                End Try
+            End While
+        End Using
+    End Sub
+
+    Private Function getObservationFromRow(row As String()) As Observation
+        Return New Observation(row(Observation.ID_INDEX),
+                               row(Observation.VALUE_INDEX),
+                               row(Observation.TIME_TAKEN_INDEX))
     End Function
 
     Private Enum Shift

@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.FileIO
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text.RegularExpressions
 
 Module modMain
@@ -10,7 +9,7 @@ Module modMain
 
         Dim readingsPath, reportPath As String
         Dim showReportFile As Boolean = False
-        Dim myShiftManager As ShiftManager
+        Dim myShiftManager As New ShiftManager()
         Dim report As ShiftQualityReport
 
         setupConsole(WINDOW_TITLE, bgColor:=ConsoleColor.Blue, fgColor:=ConsoleColor.White)
@@ -22,7 +21,7 @@ Module modMain
         reportPath = promptUser("Please enter the path and name of the report file to generate:")
         validateReportPath(reportPath)
 
-        myShiftManager = parseInputReadingsFile(readingsPath)
+        myShiftManager.parseInputReadingsFile(readingsPath)
         report = New ShiftQualityReport(myShiftManager, CORP_NAME)
 
         writeBlankLine()
@@ -38,35 +37,6 @@ Module modMain
         playEasterEggIfActivated(reportPath)
         waitForUserPressEnter()
     End Sub
-
-    Function parseInputReadingsFile(readingsPath As String) As ShiftManager
-        Dim myShiftManager As New ShiftManager()
-
-        Using myReader As New TextFieldParser(readingsPath)
-            myReader.TextFieldType = FieldType.Delimited
-            myReader.Delimiters = New String() {vbTab}
-
-            Dim currentRow As String()
-
-            While Not myReader.EndOfData
-                Try
-                    currentRow = myReader.ReadFields()
-
-                    myShiftManager.Add(getObservationFromRow(currentRow))
-                Catch ex As MalformedLineException
-                    MsgBox("Line " & ex.Message & " is invalid. Skipping.")
-                End Try
-            End While
-        End Using
-
-        Return myShiftManager
-    End Function
-
-    Function getObservationFromRow(row As String()) As Observation
-        Return New Observation(row(Observation.ID_INDEX),
-                               row(Observation.VALUE_INDEX),
-                               row(Observation.TIME_TAKEN_INDEX))
-    End Function
 
     Sub waitForUserInput()
         Console.ReadLine()
