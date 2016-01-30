@@ -8,6 +8,7 @@ Public Class ShiftQualityReport
     Private Const FULL_LINE_LENGTH As Integer = 80
     Private Const HEADER_FOOTER_DIVIDER_CHAR As String = "="
     Private Const HEADER_REPORT_TITLE As String = "Manufacturing Shift Quality Report"
+    Private Const SHIFT_INFO_HEADER_TITLE As String = "Shift Information"
     Private Const OBSERVATION_HEADER_LINE As String = "(ID  ): Value"
 
     Private OBSERVATION_LINE_FORMAT As String
@@ -22,7 +23,7 @@ Public Class ShiftQualityReport
     End Sub
 
     Public Function generateReport() As String
-        Dim returnString As String = getReportHeading() & getObservationHistogram()
+        Dim returnString As String = getReportHeading() & getObservationHistogram() & getShiftInfoHeading()
 
         Return returnString
     End Function
@@ -33,6 +34,14 @@ Public Class ShiftQualityReport
         returnString &= centerString(headerCorpTitle) & vbCrLf
         returnString &= centerString(HEADER_REPORT_TITLE) & vbCrLf
         returnString &= HEADER_FOOTER_DIVIDER_LINE & vbCrLf & vbCrLf
+
+        Return returnString
+    End Function
+
+    Private Function getShiftInfoHeading() As String
+        Dim returnString As String = HEADER_FOOTER_DIVIDER_LINE & vbCrLf
+        returnString &= centerString(SHIFT_INFO_HEADER_TITLE) & vbCrLf
+        returnString &= HEADER_FOOTER_DIVIDER_LINE & vbCrLf
 
         Return returnString
     End Function
