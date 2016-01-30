@@ -5,9 +5,10 @@
 
     Private Const DEFAULT_DISPLAY_CHARACTER As String = "*"
     Private Const DEFAULT_SPECIAL_DISPLAY_CHARACTER As String = "="
-    Private Const DEFAULT_LINE_LENGTH As Integer = 65
+    Public Const DEFAULT_LINE_LENGTH As Integer = 65
 
-    Private _scale As Integer = Nothing
+    Private _scale As Integer = 1
+    Private _scaleIsSet As Boolean = False
 
     Public Sub New(biggestNumber As Integer, smallestNumber As Integer, Optional lineLength As Integer = DEFAULT_LINE_LENGTH)
         Me.biggestNumber = biggestNumber
@@ -18,8 +19,9 @@
     End Sub
 
     Public Function getScale() As Integer
-        If IsNothing(_scale) Then
-            _scale = biggestNumber - smallestNumber
+        If Not _scaleIsSet Then
+            Dim tempScale = biggestNumber - smallestNumber
+            _scale = IIf(tempScale = 0, 1, tempScale)
         End If
 
         Return _scale
@@ -32,7 +34,7 @@
                                              DEFAULT_DISPLAY_CHARACTER)
 
         For i As Integer = 0 To ((reading - smallestNumber) / getScale()) * lineLength
-            returnString += displayCharacter
+            returnString &= displayCharacter
         Next
 
         Return returnString

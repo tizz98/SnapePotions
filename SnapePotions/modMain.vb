@@ -5,11 +5,13 @@ Imports System.Text.RegularExpressions
 Module modMain
 
     Sub Main()
-        Const WINDOW_TITLE As String = "Snape Potion Manufacturing Quality Program"
+        Const CORP_NAME As String = "Snape Potion Manufacturing"
+        Const WINDOW_TITLE As String = CORP_NAME & " Quality Program"
 
         Dim readingsPath, reportPath As String
         Dim showReportFile As Boolean = False
         Dim myShiftManager As ShiftManager
+        Dim report As ShiftQualityReport
 
         setupConsole(WINDOW_TITLE, bgColor:=ConsoleColor.Blue, fgColor:=ConsoleColor.White)
 
@@ -21,11 +23,15 @@ Module modMain
         validateReportPath(reportPath)
 
         myShiftManager = parseInputReadingsFile(readingsPath)
+        report = New ShiftQualityReport(myShiftManager, CORP_NAME)
 
-        ' Generate Report /// TODO
         writeBlankLine()
         Console.WriteLine("Report file has been generated!")
         showReportFile = promptUserYesNo("Would you like to see the report file?")
+
+        If showReportFile Then
+            Console.WriteLine(report.generateReport())
+        End If
 
         playEasterEggIfActivated(reportPath)
         waitForUserPressEnter()

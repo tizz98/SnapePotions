@@ -68,6 +68,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Histogram.vb" />
     <Compile Include="modMain.vb" />
     <Compile Include="Music.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -85,6 +86,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Observation.vb" />
+    <Compile Include="ObservationCollection.vb" />
+    <Compile Include="ShiftManager.vb" />
+    <Compile Include="ShiftQualityReport.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

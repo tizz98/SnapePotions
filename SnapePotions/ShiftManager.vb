@@ -40,15 +40,15 @@
     Public Function getAllShiftMin() As Integer
         Dim tempMin As Integer = 0
 
-        If firstShiftObservations.minObservation <= tempMin Then
+        If firstShiftObservations.observations.Count > 0 Then
             tempMin = firstShiftObservations.minObservation
         End If
 
-        If secondShiftObservations.minObservation <= tempMin Then
+        If secondShiftObservations.observations.Count > 0 AndAlso secondShiftObservations.minObservation <= tempMin Then
             tempMin = secondShiftObservations.minObservation
         End If
 
-        If thirdShiftObservations.minObservation <= tempMin Then
+        If thirdShiftObservations.observations.Count > 0 AndAlso thirdShiftObservations.minObservation <= tempMin Then
             tempMin = thirdShiftObservations.minObservation
         End If
 
@@ -58,15 +58,15 @@
     Public Function getAllShiftMax() As Integer
         Dim tempMax As Integer = 0
 
-        If firstShiftObservations.maxObservation >= tempMax Then
+        If firstShiftObservations.observations.Count > 0 Then
             tempMax = firstShiftObservations.maxObservation
         End If
 
-        If secondShiftObservations.maxObservation >= tempMax Then
+        If secondShiftObservations.observations.Count > 0 AndAlso secondShiftObservations.maxObservation >= tempMax Then
             tempMax = secondShiftObservations.maxObservation
         End If
 
-        If thirdShiftObservations.maxObservation >= tempMax Then
+        If thirdShiftObservations.observations.Count > 0 AndAlso thirdShiftObservations.maxObservation >= tempMax Then
             tempMax = thirdShiftObservations.maxObservation
         End If
 

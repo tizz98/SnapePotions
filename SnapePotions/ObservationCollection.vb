@@ -9,6 +9,9 @@
 
     Public observations As New List(Of Observation)
 
+    Private minObservationSet As Boolean = False
+    Private maxObservationSet As Boolean = False
+
     Public Sub Add(observation As Observation)
         observations.Add(observation)
 
@@ -23,11 +26,17 @@
             onCount += 1
         End If
 
-        If observation.value >= maxObservation Then
+        If Not maxObservationSet Then
+            maxObservation = observation.value
+            maxObservationSet = True
+        ElseIf (observation.value >= maxObservation) Then
             maxObservation = observation.value
         End If
 
-        If observation.value <= minObservation Then
+        If Not minObservationSet Then
+            minObservation = observation.value
+            minObservationSet = True
+        ElseIf (observation.value <= minObservation) Then
             minObservation = observation.value
         End If
     End Sub

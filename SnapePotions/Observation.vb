@@ -1,5 +1,5 @@
 ﻿Public Class Observation
-    Public id As Integer
+    Public id As String
     Public value As Integer
     Public timeTaken As DateTime
 
@@ -9,7 +9,7 @@
 
     Private Const DESIRED_READING_LEVEL As Integer = 1000
 
-    Public Sub New(id As Integer, value As Integer, timeTaken As String)
+    Public Sub New(id As String, value As Integer, timeTaken As String)
         Me.id = id
         Me.value = value
         Me.timeTaken = Convert.ToDateTime(timeTaken)
