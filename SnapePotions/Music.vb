@@ -1,6 +1,34 @@
-﻿Imports System.Threading
+﻿'------------------------------------------------------------
+'-                   File Name: Music.vb                    -
+'-                 Part of Project: Assign3                 -
+'------------------------------------------------------------
+'-                Written By: Elijah Wilson                 -
+'-                  Written On: 01/30/2016                  -
+'------------------------------------------------------------
+'- File Purpose:                                            -
+'-                                                          -
+'- Contains the Music class                                 -
+'------------------------------------------------------------
+Imports System.Threading
 
 Public Class Music
+
+    '------------------------------------------------------------
+    '-                  Subprogram Name: Play                   -
+    '------------------------------------------------------------
+    '-                Written By: Elijah Wilson                 -
+    '-                  Written On: 01/30/2016                  -
+    '------------------------------------------------------------
+    '- Subprogram Purpose:                                      -
+    '-                                                          -
+    '- Plays the Super Mario Bros. theme using Console.Beep     -
+    '------------------------------------------------------------
+    '- Parameter Dictionary (in parameter order):               -
+    '- (None)                                                   -
+    '------------------------------------------------------------
+    '- Local Variable Dictionary (alphabetically):              -
+    '- (None)                                                   -
+    '------------------------------------------------------------
     Public Shared Sub Play()
         ' Super Mario Bros. Theme
         ' http://feedonfeeds.com/minutillo.com/steve/weblog/images/mario-sheet-music.jpg
