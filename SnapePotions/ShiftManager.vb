@@ -26,11 +26,12 @@
     End Sub
 
     Private Function getShiftFromObservation(observation As Observation) As Shift
-        If observation.timeTaken >= FIRST_SHIFT_START And observation.timeTaken <= FIRST_SHIFT_END Then
+        ' .TimeOfDay is needed so that we only compare the times and not the dates
+        If (observation.timeTaken.TimeOfDay >= FIRST_SHIFT_START.TimeOfDay) And (observation.timeTaken.TimeOfDay <= FIRST_SHIFT_END.TimeOfDay) Then
             Return Shift.First
-        ElseIf observation.timeTaken >= SECOND_SHIFT_START And observation.timeTaken <= SECOND_SHIFT_END Then
+        ElseIf (observation.timeTaken.TimeOfDay >= SECOND_SHIFT_START.TimeOfDay) And (observation.timeTaken.TimeOfDay <= SECOND_SHIFT_END.TimeOfDay) Then
             Return Shift.Second
-        ElseIf observation.timeTaken >= THIRD_SHIFT_START And observation.timeTaken <= THIRD_SHIFT_END Then
+        ElseIf (observation.timeTaken.TimeOfDay >= THIRD_SHIFT_START.TimeOfDay) And (observation.timeTaken.TimeOfDay <= THIRD_SHIFT_END.TimeOfDay) Then
             Return Shift.Third
         End If
 
